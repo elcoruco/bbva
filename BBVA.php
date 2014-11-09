@@ -15,6 +15,8 @@ class BBVA{
   const ZIP_RANK_ENDPOINT = "https://apis.bbvabancomer.com/datathon/info/zipcodes";
   const TILES_RANK_ENDPOINT = "https://apis.bbvabancomer.com/datathon/info/tiles";
 
+  const TILES_BASE_STATS_ENDPONT = "https://apis.bbvabancomer.com/datathon/tiles/%lat%/%lng%/basic_stats";
+
   // CREDENTIALS
   public $app_id;
   public $key;
@@ -41,6 +43,16 @@ class BBVA{
 
   public function top_zips(){
     return $this->make_conn(self::ZIP_RANK_ENDPOINT);
+  }
+
+  public function top_tiles(){
+    return $this->make_conn(self::TILES_RANK_ENDPOINT);
+  }
+
+  public function tiles_base_stats($lat, $lng, $query = ['page_size' => 10, 'date_min' => '20140101', 'date_max' => '20140331', 'group_by' => 'month']){
+    $trans = ["%lat%" => $lat, "%lng%" => $lng];
+    $url = strtr(self::TILES_BASE_STATS_ENDPONT, $trans);
+    return $this->make_conn($url, $query);
   }
 
   /*
