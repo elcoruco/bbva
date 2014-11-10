@@ -1,6 +1,6 @@
 <?php
 /** 
-* BBVA easy way
+* BBVA the easy way
 * @author @elcoruco <boris@gobiernofacil.com>
 */
 
@@ -12,10 +12,24 @@ class BBVA{
 
   // ENDPOINTS
   const MERCHANTS_CATS_ENDPOINT = "https://apis.bbvabancomer.com/datathon/info/merchants_categories";
-  const ZIP_RANK_ENDPOINT = "https://apis.bbvabancomer.com/datathon/info/zipcodes";
-  const TILES_RANK_ENDPOINT = "https://apis.bbvabancomer.com/datathon/info/tiles";
+  const ZIP_RANK_ENDPOINT       = "https://apis.bbvabancomer.com/datathon/info/zipcodes";
+  const TILES_RANK_ENDPOINT     = "https://apis.bbvabancomer.com/datathon/info/tiles";
 
-  const TILES_BASE_STATS_ENDPONT = "https://apis.bbvabancomer.com/datathon/tiles/%lat%/%lng%/basic_stats";
+  // BASE_ENDPOINTS
+  const BASE_TILE_ENDPOINT = "https://apis.bbvabancomer.com/datathon/tiles/%lat%/%lng%/";
+  const BASE_ZIP_ENDPOINT  = "https://apis.bbvabancomer.com/datathon/zipcodes/%zipcode%/";
+
+  // OPTION ENDPOINTS
+  const TILE_BASE_STATS       = "basic_stats";
+  const ZIPS_BY_TILE          = "customer_zipcodes";
+  const AGE_BY_TILE           = "age_distribution";
+
+  const GENDER_BY_TILE        = "gender_distribution";
+  const PAYMENT_BY_TILE       = "payment_distribution";
+  const CATEGORY_BY_TILE      = "category_distribution";
+  const CONSUMPTION_BY_TILE   = "consumption_pattern";
+  const CARDS_CUBE_BY_TILE    = "cards_cube";
+  const PAYMENTS_CUBE_BY_TILE = "payments_cube";
 
   // CREDENTIALS
   public $app_id;
@@ -23,6 +37,15 @@ class BBVA{
 
   // MORE STUFF
   public $ch;
+
+  // DEFAULT SETTINGS
+  public $settings = [
+    'page_size' => 10, 
+    'date_min'  => '20140101', 
+    'date_max'  => '20140331', 
+    'group_by'  => 'month', 
+    'by'        => 'incomes'
+  ];
 
   /*
   * constructor
@@ -34,7 +57,7 @@ class BBVA{
   }
 
   /**
-  * main functions
+  * base functions
   * -------------------------------------------------------------
   */
   public function get_categories(){
@@ -49,10 +72,23 @@ class BBVA{
     return $this->make_conn(self::TILES_RANK_ENDPOINT);
   }
 
-  public function tiles_base_stats($lat, $lng, $query = ['page_size' => 10, 'date_min' => '20140101', 'date_max' => '20140331', 'group_by' => 'month']){
-    $trans = ["%lat%" => $lat, "%lng%" => $lng];
-    $url = strtr(self::TILES_BASE_STATS_ENDPONT, $trans);
-    return $this->make_conn($url, $query);
+  /**
+  * tiles functions
+  * -------------------------------------------------------------
+  */
+  public function tiles_base_stats($lat, $lng, $query = []){
+    $url = strtr(self::BASE_TILE_ENDPOINT . self::TILE_BASE_STATS, ["%lat%" => $lat, "%lng%" => $lng]);
+    return $this->make_conn($url, array_merge($this->settings, $query));
+  }
+
+  public function top_zips_by_tile($lat, $lng, $query = []){
+    $url = strtr(self::BASE_TILE_ENDPOINT . self::ZIPS_BY_TILE, ["%lat%" => $lat, "%lng%" => $lng]);
+    return $this->make_conn($url, array_merge($this->settings, $query));
+  }
+
+  public function age_distribution_by_tile($lat, $lng, $query = []){
+    $url = strtr(self::BASE_TILE_ENDPOINT . self::AGE_BY_TILE, ["%lat%" => $lat, "%lng%" => $lng]);
+    return $this->make_conn($url, array_merge($this->settings, $query));
   }
 
   /*
