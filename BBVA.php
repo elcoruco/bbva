@@ -20,16 +20,15 @@ class BBVA{
   const BASE_ZIP_ENDPOINT  = "https://apis.bbvabancomer.com/datathon/zipcodes/%zipcode%/";
 
   // OPTION ENDPOINTS
-  const TILE_BASE_STATS       = "basic_stats";
-  const ZIPS_BY_TILE          = "customer_zipcodes";
-  const AGE_BY_TILE           = "age_distribution";
-
-  const GENDER_BY_TILE        = "gender_distribution";
-  const PAYMENT_BY_TILE       = "payment_distribution";
-  const CATEGORY_BY_TILE      = "category_distribution";
-  const CONSUMPTION_BY_TILE   = "consumption_pattern";
-  const CARDS_CUBE_BY_TILE    = "cards_cube";
-  const PAYMENTS_CUBE_BY_TILE = "payments_cube";
+  const BASIC_STATS           = "basic_stats";
+  const CUSTOMER_ZIPCODES     = "customer_zipcodes";
+  const AGE_DISTRIBUTION      = "age_distribution";
+  const GENDER_DISTRIBUTION   = "gender_distribution";
+  const PAYMENT_DISTRIBUTION  = "payment_distribution";
+  const CATEGORY_DISTRIBUTION = "category_distribution";
+  const CONSUMPTION_PATTERN   = "consumption_pattern";
+  const CARDS_CUBE            = "cards_cube";
+  const PAYMENTS_CUBE         = "payments_cube";
 
   // CREDENTIALS
   public $app_id;
@@ -76,25 +75,96 @@ class BBVA{
   * tiles functions
   * -------------------------------------------------------------
   */
-  public function tiles_base_stats($lat, $lng, $query = []){
-    $url = strtr(self::BASE_TILE_ENDPOINT . self::TILE_BASE_STATS, ["%lat%" => $lat, "%lng%" => $lng]);
-    return $this->make_conn($url, array_merge($this->settings, $query));
+  public function basic_stats_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::BASIC_STATS, $lat, $lng, $query);
   }
 
-  public function top_zips_by_tile($lat, $lng, $query = []){
-    $url = strtr(self::BASE_TILE_ENDPOINT . self::ZIPS_BY_TILE, ["%lat%" => $lat, "%lng%" => $lng]);
-    return $this->make_conn($url, array_merge($this->settings, $query));
+  public function customer_zipcodes_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::CUSTOMER_ZIPCODES, $lat, $lng, $query);
   }
 
   public function age_distribution_by_tile($lat, $lng, $query = []){
-    $url = strtr(self::BASE_TILE_ENDPOINT . self::AGE_BY_TILE, ["%lat%" => $lat, "%lng%" => $lng]);
-    return $this->make_conn($url, array_merge($this->settings, $query));
+    return $this->get_tile_data(self::AGE_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function gender_distribution_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::GENDER_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function payment_distribution_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::PAYMENT_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function category_distribution_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::CATEGORY_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function consumption_pattern_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::CONSUMPTION_PATTERN, $lat, $lng, $query);
+  }
+
+  public function cards_cube_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::CARDS_CUBE, $lat, $lng, $query);
+  }
+
+  public function payments_cube_by_tile($lat, $lng, $query = []){
+    return $this->get_tile_data(self::PAYMENTS_CUBE, $lat, $lng, $query);
+  }
+
+  /**
+  * zipcode functions
+  * -------------------------------------------------------------
+  */
+  public function basic_stats_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::BASIC_STATS, $lat, $lng, $query);
+  }
+
+  public function customer_zipcodes_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::CUSTOMER_ZIPCODES, $lat, $lng, $query);
+  }
+
+  public function age_distribution_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::AGE_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function gender_distribution_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::GENDER_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function payment_distribution_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::PAYMENT_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function category_distribution_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::CATEGORY_DISTRIBUTION, $lat, $lng, $query);
+  }
+
+  public function consumption_pattern_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::CONSUMPTION_PATTERN, $lat, $lng, $query);
+  }
+
+  public function cards_cube_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::CARDS_CUBE, $lat, $lng, $query);
+  }
+
+  public function payments_cube_by_zipcode($lat, $lng, $query = []){
+    return $this->get_zip_data(self::PAYMENTS_CUBE, $lat, $lng, $query);
   }
 
   /*
   * helpers
   * -------------------------------------------------------------
   */
+  private function get_tile_data($endpoint, $lat, $lng, $query){
+    $url = strtr(self::BASE_TILE_ENDPOINT . $endpoint, ["%lat%" => $lat, "%lng%" => $lng]);
+    return $this->make_conn($url, array_merge($this->settings, $query));
+  }
+
+  private function get_zip_data($endpoint, $zipcode, $query){
+    $url = str_replace("%zipcode%", $zipcode, self::BASE_ZIP_ENDPOINT . $endpoint);
+    return $this->make_conn($url, array_merge($this->settings, $query));
+  }
+
   private function make_conn($url, $params = []){
     $this->ch = curl_init();
     curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
