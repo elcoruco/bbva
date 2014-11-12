@@ -1,7 +1,7 @@
 <?php
 /** 
 * BBVA the easy way
-* @author @elcoruco <boris@gobiernofacil.com>
+* @author @gobiernofacil <howdy@gobiernofacil.com>
 */
 
 class BBVA{
@@ -115,40 +115,40 @@ class BBVA{
   * zipcode functions
   * -------------------------------------------------------------
   */
-  public function basic_stats_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::BASIC_STATS, $lat, $lng, $query);
+  public function basic_stats_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::BASIC_STATS, $zipcode, $query);
   }
 
-  public function customer_zipcodes_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::CUSTOMER_ZIPCODES, $lat, $lng, $query);
+  public function customer_zipcodes_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::CUSTOMER_ZIPCODES, $zipcode, $query);
   }
 
-  public function age_distribution_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::AGE_DISTRIBUTION, $lat, $lng, $query);
+  public function age_distribution_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::AGE_DISTRIBUTION, $zipcode, $query);
   }
 
-  public function gender_distribution_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::GENDER_DISTRIBUTION, $lat, $lng, $query);
+  public function gender_distribution_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::GENDER_DISTRIBUTION, $zipcode, $query);
   }
 
-  public function payment_distribution_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::PAYMENT_DISTRIBUTION, $lat, $lng, $query);
+  public function payment_distribution_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::PAYMENT_DISTRIBUTION, $zipcode, $query);
   }
 
-  public function category_distribution_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::CATEGORY_DISTRIBUTION, $lat, $lng, $query);
+  public function category_distribution_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::CATEGORY_DISTRIBUTION, $zipcode, $query);
   }
 
-  public function consumption_pattern_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::CONSUMPTION_PATTERN, $lat, $lng, $query);
+  public function consumption_pattern_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::CONSUMPTION_PATTERN, $zipcode, $query);
   }
 
-  public function cards_cube_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::CARDS_CUBE, $lat, $lng, $query);
+  public function cards_cube_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::CARDS_CUBE, $zipcode, $query);
   }
 
-  public function payments_cube_by_zipcode($lat, $lng, $query = []){
-    return $this->get_zip_data(self::PAYMENTS_CUBE, $lat, $lng, $query);
+  public function payments_cube_by_zipcode($zipcode, $query = []){
+    return $this->get_zip_data(self::PAYMENTS_CUBE, $zipcode, $query);
   }
 
   /*
