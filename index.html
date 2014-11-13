@@ -1,9 +1,25 @@
 <!doctype html>
 <html>
 <head>
-  
+  <title>Example request</title>
 </head>
 <body>
-  
+  <form id="meh">
+    <input name="val">
+    <input type="submit" value="enviar">
+  </form>
+  <script>
+    var q = new XMLHttpRequest();
+    q.open('get', 'conn.php', true);
+    q.send('a=hola');
+    q.onreadystatechange = function(a,b){
+      if (q.readyState === 4) {
+        console.log(JSON.parse(q.responseText));
+      }
+      else{
+        console.log('x___x');
+      }
+    }
+  </script>
 </body>
 </html>
